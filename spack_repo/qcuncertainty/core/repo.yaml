@@ -1,0 +1,10 @@
+# For more information on Spack package repositories, see
+# https://spack.readthedocs.io/en/latest/repositories.html
+
+repo:
+  # Unique identifier for this repository
+  # For more details, see https://spack.readthedocs.io/en/latest/repositories.html#namespaces
+  namespace: 'qcuncertainty.core'
+
+  # Spack package API this repo adheres to
+  api: v1.0

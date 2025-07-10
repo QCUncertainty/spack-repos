@@ -1,0 +1,7 @@
+# Used by Spack v1.0.0 to automatically add Spack repos from GitHub
+
+repo_index:
+  # Relative paths from project root to repos
+  paths:
+  - spack_repo/qcuncertainty/core
+  - spack_repo/qcuncertainty/overrides
