@@ -1,4 +1,5 @@
 # Used by Spack v1.0.0 to automatically add Spack repos from GitHub
+# For more info, see https://spack.readthedocs.io/en/latest/repositories.html#git-based-repositories
 
 repo_index:
   # Relative paths from project root to repos
