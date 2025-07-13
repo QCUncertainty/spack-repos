@@ -7,4 +7,4 @@ repo:
   namespace: 'qcuncertainty.overrides'
 
   # Spack package API this repo adheres to
-  api: v1.0
+  api: v2.0
