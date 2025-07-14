@@ -77,7 +77,10 @@ class Sigma(CMakePackage):
 
     # Runtime dependencies
     depends_on("cxx", type="build")
-    depends_on("eigen@master", when="+eigen")
+    depends_on(
+        "eigen",
+        when="+eigen",
+    )
 
     # Test dependencies
     depends_on("catch2", when="+tests")
