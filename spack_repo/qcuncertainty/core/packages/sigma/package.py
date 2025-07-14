@@ -26,17 +26,17 @@ from spack_repo.builtin.build_systems.cmake import CMakePackage
 
 
 class Sigma(CMakePackage):
-    """FIXME: Put a proper description of your package here."""
+    """Sigma is a header-only C++ library for uncertainty propagation
+    throughout mathematical operations on floating point values, inspired
+    by uncertainties for Python and Measurements.jl for Julia.
+    """
 
-    # FIXME: Add a proper url for your package's homepage here.
     homepage = "https://github.com/QCUncertainty/sigma"
     url = (
         "https://github.com/QCUncertainty/sigma/archive/refs/tags/v1.0.tar.gz"
     )
     git = "https://github.com/QCUncertainty/sigma.git"  # For the latest commit
 
-    # FIXME: Add a list of GitHub accounts to
-    # notify when the package is updated.
     pkg.maintainers("jwaldrop107", "zachcran")
 
     pkg.license("Apache-2.0", checked_by="zachcran")
