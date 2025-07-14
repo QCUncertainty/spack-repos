@@ -21,7 +21,7 @@
 
 import os
 
-from spack.package import *
+from spack import package as pkg
 from spack_repo.builtin.build_systems.cmake import CMakePackage
 
 
@@ -37,66 +37,67 @@ class Sigma(CMakePackage):
 
     # FIXME: Add a list of GitHub accounts to
     # notify when the package is updated.
-    maintainers("jwaldrop107", "zachcran")
+    pkg.maintainers("jwaldrop107", "zachcran")
 
-    license("Apache-2.0", checked_by="zachcran")
+    pkg.license("Apache-2.0", checked_by="zachcran")
 
     # Latest commit from GitHub
     # "This download method is untrusted, and is not recommended. Branches are
     # moving targets, so the commit you get when you install the package likely
-    # won’t be the same commit that was used when the package was first written."
+    # won’t be the same commit that was used when the package was first
+    # written."
     #                                          ~~~~ From the Spack docs
-    version("main", branch="main", preferred=True)
+    pkg.version("main", branch="main", preferred=True)
 
     # Versions from git tags
-    version(
+    pkg.version(
         "1.0",
         sha256="ea2317e6f31eed4d4c489cc56d248d10d93588cb170d718e3ffb00435329e0bc",
     )
 
-    variant(
+    pkg.variant(
         "eigen",
         default=True,
         description="Include Eigen compatibility headers",
     )
-    variant("docs", default=False, description="Build documentation")
+    pkg.variant("docs", default=False, description="Build documentation")
     # Will also set BUILD_DOCS
-    variant(
+    pkg.variant(
         "only-docs", default=False, description="Only build documentation."
     )
-    variant(
+    pkg.variant(
         "docs-fail-on-warning",
         default=False,
         description="Documentation build will fail from warnings.",
     )
-    variant(
+    pkg.variant(
         "tests",
         default=False,
         description="Build unit tests",
     )
 
     # Runtime dependencies
-    depends_on("cxx", type="build")
-    depends_on(
+    pkg.depends_on("cxx", type="build")
+    pkg.depends_on(
         "eigen",
         when="+eigen",
     )
 
     # Test dependencies
-    depends_on("catch2", when="+tests")
+    pkg.depends_on("catch2", when="+tests")
 
     # Sanity check tests during installation
     sanity_check_is_file = [
-        join_path("include", "sigma", "sigma.hpp"),
-        join_path("lib", "sigma", "cmake", "sigmaConfig.cmake"),
-        join_path("lib", "sigma", "cmake", "sigmaConfigVersion.cmake"),
-        join_path("lib", "sigma", "cmake", "sigma-target.cmake"),
+        pkg.join_path("include", "sigma", "sigma.hpp"),
+        pkg.join_path("lib", "sigma", "cmake", "sigmaConfig.cmake"),
+        pkg.join_path("lib", "sigma", "cmake", "sigmaConfigVersion.cmake"),
+        pkg.join_path("lib", "sigma", "cmake", "sigma-target.cmake"),
     ]
 
     sanity_check_is_dir = [
-        join_path("include", "sigma"),
-        join_path("lib", "sigma"),
-        join_path("lib", "sigma", "cmake"),
+        pkg.join_path("include", "sigma"),
+        pkg.join_path("lib", "sigma"),
+        pkg.join_path("lib", "sigma", "cmake"),
     ]
 
     def cmake_args(self):
