@@ -71,9 +71,14 @@ class Sigma(CMakePackage):
         description="Documentation build will fail from warnings.",
     )
     pkg.variant(
-        "tests",
-        default=False,
-        description="Build unit tests",
+        "cxxstd",
+        default="17",
+        # NOTE: Comma after "17" is necessary so Spack doesn't split it into
+        #       individual characters
+        values=("17",),
+        multi=False,
+        description="Use the specified C++ standard when building",
+        sticky=True,
     )
 
     # Runtime dependencies
@@ -84,7 +89,7 @@ class Sigma(CMakePackage):
     )
 
     # Test dependencies
-    pkg.depends_on("catch2", when="+tests")
+    pkg.depends_on("catch2", type=("build", "test"))
 
     # Sanity check tests during installation
     sanity_check_is_file = [
@@ -102,21 +107,34 @@ class Sigma(CMakePackage):
 
     def cmake_args(self):
         args = [
-            self.define_from_variant("BUILD_TESTING", "tests"),
             self.define_from_variant("BUILD_DOCS", "docs"),
             self.define_from_variant("ONLY_BUILD_DOCS", "only-docs"),
             self.define_from_variant(
                 "DOCS_FAIL_ON_WARNING", "docs-fail-on-warning"
             ),
             self.define_from_variant("ENABLE_EIGEN_SUPPORT", "eigen"),
+            self.define("BUILD_TESTING", self.run_tests),
         ]
 
         if "CMAKE_TOOLCHAIN_FILE" in os.environ:
             args.append(
                 f"-DCMAKE_TOOLCHAIN_FILE={os.environ["CMAKE_TOOLCHAIN_FILE"]}"
             )
-        args.append("-DCMAKE_MESSAGE_LOG_LEVEL=DEBUG")
-        args.append("-DCMAKE_POLICY_DEFAULT_CMP0152=NEW")
+        # TODO: +debug flag? +verbose flag?
+        args.append(self.define("CMAKE_MESSAGE_LOG_LEVEL", "DEBUG"))
+        # Silence FetchContent by default
+        args.append(self.define("FETCHCONTENT_QUIET", True))
         args.append("-Wno-dev")
+        # https://cmake.org/cmake/help/latest/policy/CMP0152.html
+        # Added in 3.28; OLD is deprecated now
+        args.append(self.define("CMAKE_POLICY_DEFAULT_CMP0152", "NEW"))
+
+        # DEBUG REMOVE ME
+        args.append(
+            self.define(
+                "FETCHCONTENT_SOURCE_DIR_NWX_CMAKE",
+                "/home/zachcran/workspaces/nwchemex/repos_dev/nwxcmake",
+            )
+        )
 
         return args
