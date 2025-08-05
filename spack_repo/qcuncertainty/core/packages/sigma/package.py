@@ -114,6 +114,7 @@ class Sigma(CMakePackage):
             ),
             self.define_from_variant("ENABLE_EIGEN_SUPPORT", "eigen"),
             self.define("BUILD_TESTING", self.run_tests),
+            self.define_from_variant("CMAKE_CXX_STANDARD", "cxxstd"),
         ]
 
         if "CMAKE_TOOLCHAIN_FILE" in os.environ:
