@@ -121,21 +121,9 @@ class Sigma(CMakePackage):
             args.append(
                 f"-DCMAKE_TOOLCHAIN_FILE={os.environ["CMAKE_TOOLCHAIN_FILE"]}"
             )
-        # TODO: +debug flag? +verbose flag?
-        args.append(self.define("CMAKE_MESSAGE_LOG_LEVEL", "DEBUG"))
-        # Silence FetchContent by default
-        args.append(self.define("FETCHCONTENT_QUIET", True))
         args.append("-Wno-dev")
         # https://cmake.org/cmake/help/latest/policy/CMP0152.html
         # Added in 3.28; OLD is deprecated now
         args.append(self.define("CMAKE_POLICY_DEFAULT_CMP0152", "NEW"))
-
-        # DEBUG REMOVE ME
-        args.append(
-            self.define(
-                "FETCHCONTENT_SOURCE_DIR_NWX_CMAKE",
-                "/home/zachcran/workspaces/nwchemex/repos_dev/nwxcmake",
-            )
-        )
 
         return args
