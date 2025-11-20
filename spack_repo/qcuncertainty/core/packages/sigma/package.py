@@ -70,16 +70,6 @@ class Sigma(CMakePackage):
         default=False,
         description="Documentation build will fail from warnings.",
     )
-    pkg.variant(
-        "cxxstd",
-        default="17",
-        # NOTE: Comma after "17" is necessary so Spack doesn't split it into
-        #       individual characters
-        values=("17",),
-        multi=False,
-        description="Use the specified C++ standard when building",
-        sticky=True,
-    )
 
     # Runtime dependencies
     pkg.depends_on("cxx", type="build")
@@ -114,7 +104,6 @@ class Sigma(CMakePackage):
             ),
             self.define_from_variant("ENABLE_EIGEN_SUPPORT", "eigen"),
             self.define("BUILD_TESTING", self.run_tests),
-            self.define_from_variant("CMAKE_CXX_STANDARD", "cxxstd"),
         ]
 
         if "CMAKE_TOOLCHAIN_FILE" in os.environ:
